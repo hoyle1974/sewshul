@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package sociallist;
+option go_package = "github.com/jstrohm/sewshul/protobuf";
+
+enum SocialListType {
+  FOLLOW = 0;
+  FRIEND = 1;
+  BLOCKED = 2;
+}
+
+message SocialListRequest {
+  string user_id = 1;
+  SocialListType list_type = 2;
+}
+
+message SocialListResponse {
+  repeated string ids = 1;
+}
+
+message AddToSocialListRequest {
+  string user_id = 1;
+  SocialListType socail_list_type = 2;
+  string id_to_add = 3;
+}
+
+message AddToSocialListResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message RemoveFromSocialListRequest {
+  string user_id = 1;
+  SocialListType social_list_type = 2;
+  string id_to_remove = 3;
+}
+
+message RemoveFromSocialListResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+service SocialListService {
+  rpc GetSocialList (SocialListRequest) returns (SocialListResponse);
+  rpc AddToSocialList (AddToSocialListRequest) returns (AddToSocialListResponse);
+  rpc RemoveFromSocialList (RemoveFromSocialListRequest) returns (RemoveFromSocialListResponse);
+}

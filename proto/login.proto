@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package login;
+option go_package = "github.com/jstrohm/sewshul/protobuf";
+
+message ClientAddress {
+  string ip_address = 1;
+  int32 port = 2;
+}
+
+message UserContact {
+  string user_id = 1;
+  ClientAddress client_address = 2;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+  ClientAddress client_address = 3;
+}
+
+message LoginResponse {
+  bool success = 1;
+  string message = 2;
+  repeated UserContact follows = 3;
+  repeated UserContact following = 4;
+  repeated string blocked = 5;
+  map<string, string> settings = 6;
+}
+
+service LoginService {
+  rpc Login (LoginRequest) returns (LoginResponse);
+}
