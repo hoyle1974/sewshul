@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package login;
-option go_package = "github.com/jstrohm/sewshul/protobuf";
+package proto;
+option go_package = "github.com/hoyle1974/sewshul/proto";
 
 message ClientAddress {
   string ip_address = 1;

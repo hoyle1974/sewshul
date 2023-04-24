@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package sociallist;
-option go_package = "github.com/jstrohm/sewshul/protobuf";
+package proto;
+option go_package = "github.com/hoyle1974/sewshul/proto";
 
 enum SocialListType {
   FOLLOW = 0;

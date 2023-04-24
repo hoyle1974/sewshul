@@ -1,17 +1,18 @@
 syntax = "proto3";
 
-package account;
-option go_package = "github.com/jstrohm/sewshul/protobuf";
+package proto;
+option go_package = "github.com/hoyle1974/sewshul/proto";
 
-message Account {
+message CreateAccountRequest {
   string username = 1;
   string password = 2;
 }
 
 service AccountService {
-  rpc CreateAccount (Account) returns (AccountResponse);
+  rpc CreateAccount (CreateAccountRequest) returns (CreateAccountResponse);
 }
 
-message AccountResponse {
+message CreateAccountResponse {
   string message = 1;
+  string account_id = 2;
 }
