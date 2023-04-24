@@ -8,10 +8,6 @@ require (
 	google.golang.org/grpc v1.54.0
 )
 
-replace github.org/hoyle1974/sewshul/proto => /Users/jstrohm/code/sewshul/proto
-
-replace github.com/hoyle1974/sewshul/microservice => /Users/jstrohm/code/sewshul/microservice
-
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
