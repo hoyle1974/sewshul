@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/hoyle1974/sewshul/microservice"
-	pb "github.org/hoyle1974/sewshul/proto"
+	pb "github.com/hoyle1974/sewshul/proto"
 	"google.golang.org/grpc"
 )
 
