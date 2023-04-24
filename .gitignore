@@ -19,10 +19,5 @@
 
 # Go workspace file
 go.work
+go.work.sum
 
-proto/account.pb.go
-proto/account_grpc.pb.go
-proto/list.pb.go
-proto/list_grpc.pb.go
-proto/login.pb.go
-proto/login_grpc.pb.go
