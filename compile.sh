@@ -6,8 +6,9 @@ container=$(buildah from docker.io/library/golang@sha256:d78cd58c598fa1f0c92046f
 echo "Container: $container"
 buildah copy $container "*" .
 buildah config --env GOPATH="" $container
-buildah run $container go mod download
-buildah run $container go build .
+#buildah run $container go mod download
+#buildah run $container go build .
+buildah run $container make
 mountpoint=$(buildah mount $container)
 echo "Mountpoint: $mountpoint"
 buildah run $container pwd

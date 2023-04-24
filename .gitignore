@@ -21,3 +21,8 @@
 go.work
 go.work.sum
 
+account/account
+list/list
+login/login
+sewshul.config
+
