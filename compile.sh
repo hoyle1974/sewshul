@@ -8,14 +8,17 @@ buildah copy $container "*" .
 buildah config --env GOPATH="" $container
 
 buildah config --workingdir /account
+buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
 buildah config --workingdir /list
+buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
 buildah config --workingdir /login
+buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
