@@ -15,7 +15,7 @@ buildah run $container find .
 
 echo " --- Build account ---"
 buildah config --workingdir ./account $container
-buildah run pwd
+buildah run $container find .
 buildah run $container go mod download
 buildah run $container go build .
 
