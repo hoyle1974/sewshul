@@ -12,6 +12,7 @@ buildah config --env GOPATH="" $container
 
 echo " --- debug ---"
 buildah run --contextdir ./account $container find .
+buildah run --contextdir ./account $container cat go.mod
 
 echo " --- Build account ---"
 #buildah config --workingdir ./account $container
