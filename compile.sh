@@ -16,6 +16,7 @@ buildah run $container find .
 echo " --- Build account ---"
 #buildah config --workingdir ./account $container
 buildah run --contextdir ./account $container go mod download
+buildah run --contextdir ./account $container go mod tidy
 buildah run --contextdir ./account $container go build .
 
 #echo " --- Build list ---"
