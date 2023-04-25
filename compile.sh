@@ -7,17 +7,20 @@ echo "Container: $container"
 buildah copy $container "*" .
 buildah config --env GOPATH="" $container
 
-buildah config --workingdir /account $container
+echo " --- Build account ---"
+buildah config --workingdir ./account $container
 buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
-buildah config --workingdir /list $container
+echo " --- Build list ---"
+buildah config --workingdir ./list $container
 buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
-buildah config --workingdir /login $container
+echo " --- Build login ---"
+buildah config --workingdir ./login $container
 buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
@@ -29,6 +32,8 @@ buildah run $container pwd
 buildah run $container find .
 find .
 mkdir sewshul
-cp $mountpoint/go/sewshul ./sewshul/sewshul
+cp $mountpoint/go/account ./sewshul/account
+cp $mountpoint/go/list ./sewshul/list
+cp $mountpoint/go/login ./sewshul/login
 buildah unmount $mountpoint
 buildah rm $container
