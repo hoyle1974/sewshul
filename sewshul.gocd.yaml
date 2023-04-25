@@ -30,12 +30,6 @@ pipelines:
             - exec:
                 arguments:
                   - -c
-                  - find .
-                command: /bin/bash
-                run_if: passed
-            - exec:
-                arguments:
-                  - -c
                   - ./compile.sh
                 command: /bin/bash
                 run_if: passed
@@ -65,18 +59,6 @@ pipelines:
                 stage: compile
                 job: compile-sewshul
                 source: sewshul/
-            - exec:
-                arguments:
-                  - -c
-                  - pwd
-                command: /bin/bash
-                run_if: passed
-            - exec:
-                arguments:
-                  - -c
-                  - find .
-                command: /bin/bash
-                run_if: passed
             - exec:
                 arguments:
                   - -c
