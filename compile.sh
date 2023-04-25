@@ -7,6 +7,7 @@ echo "Container: $container"
 buildah copy $container "account" ./account
 buildah copy $container "list" ./list
 buildah copy $container "login" ./login
+buildah copy $container "Dockerfile" ./Dockerfile
 buildah config --env GOPATH="" $container
 
 echo " --- debug ---"
