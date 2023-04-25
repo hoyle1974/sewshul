@@ -10,8 +10,12 @@ buildah copy $container "list" ./list
 buildah copy $container "login" ./login
 buildah config --env GOPATH="" $container
 
+echo " --- debug ---"
+buildah run $container find .
+
 echo " --- Build account ---"
 buildah config --workingdir ./account $container
+buildah run pwd
 buildah run $container go mod download
 buildah run $container go build .
 
