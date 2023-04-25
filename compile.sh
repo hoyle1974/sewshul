@@ -18,7 +18,7 @@ echo " --- Build account ---"
 #buildah run $container go build .
 
 #buildah run $container /bin/sh -c 'cd account; go mod tidy; go build .'
-buildah run $container /bin/sh -c 'cd account; go mod download; go build .'
+buildah run $container /bin/sh -c 'cd account; go build .'
 
 #echo " --- Build list ---"
 #buildah config --workingdir ./list $container
