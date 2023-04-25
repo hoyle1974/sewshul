@@ -30,6 +30,12 @@ pipelines:
             - exec:
                 arguments:
                   - -c
+                  - find .
+                command: /bin/bash
+                run_if: passed
+            - exec:
+                arguments:
+                  - -c
                   - ./compile.sh
                 command: /bin/bash
                 run_if: passed
