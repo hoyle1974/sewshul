@@ -7,22 +7,22 @@ echo "Container: $container"
 buildah copy $container "*" .
 buildah config --env GOPATH="" $container
 
-buildah config --workingdir /account
+buildah config --workingdir /account $container
 buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
-buildah config --workingdir /list
+buildah config --workingdir /list $container
 buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
-buildah config --workingdir /login
+buildah config --workingdir /login $container
 buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
-buildah config --workingdir .
+buildah config --workingdir . $container
 mountpoint=$(buildah mount $container)
 echo "Mountpoint: $mountpoint"
 buildah run $container pwd
