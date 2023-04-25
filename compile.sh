@@ -8,12 +8,12 @@ buildah copy $container "*" .
 buildah copy $container "account" ./account
 buildah copy $container "list" ./list
 buildah copy $container "login" ./login
-#buildah config --env GOPATH="" $container
+buildah config --env GOPATH="" $container
 
-#echo " --- Build account ---"
-#buildah config --workingdir ./account $container
-#buildah run $container go mod download
-#buildah run $container go build .
+echo " --- Build account ---"
+buildah config --workingdir ./account $container
+buildah run $container go mod download
+buildah run $container go build .
 
 #echo " --- Build list ---"
 #buildah config --workingdir ./list $container
