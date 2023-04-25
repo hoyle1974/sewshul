@@ -19,11 +19,11 @@ buildah run $container /bin/sh -c 'cd login; go build .'
 buildah config --workingdir . $container
 mountpoint=$(buildah mount $container)
 echo "Mountpoint: $mountpoint"
-uildah run $container find .
+buildah run $container find .
 find .
 mkdir sewshul
-cp $mountpoint/go/account ./sewshul/account
-cp $mountpoint/go/list ./sewshul/list
-cp $mountpoint/go/login ./sewshul/login
+cp $mountpoint/go/account/account ./sewshul/account
+cp $mountpoint/go/list/list ./sewshul/list
+cp $mountpoint/go/login/login ./sewshul/login
 buildah unmount $mountpoint
 buildah rm $container
