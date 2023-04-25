@@ -9,19 +9,16 @@ buildah config --env GOPATH="" $container
 
 echo " --- Build account ---"
 buildah config --workingdir ./account $container
-buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
 echo " --- Build list ---"
 buildah config --workingdir ./list $container
-buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
 echo " --- Build login ---"
 buildah config --workingdir ./login $container
-buildah run $container go mod tidy
 buildah run $container go mod download
 buildah run $container go build .
 
