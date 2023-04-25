@@ -4,7 +4,7 @@ set -x
 
 container=$(buildah from docker.io/library/golang@sha256:d78cd58c598fa1f0c92046f61fde32d739781e036e3dc7ccf8fdb50129243dd8)
 echo "Container: $container"
-buildah copy $container "*" .
+buildah copy -r $container "*" .
 buildah config --env GOPATH="" $container
 
 #echo " --- Build account ---"
