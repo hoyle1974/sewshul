@@ -14,10 +14,9 @@ echo " --- debug ---"
 buildah run $container find .
 
 echo " --- Build account ---"
-buildah config --workingdir ./account $container
-buildah run $container find .
-buildah run $container go mod download
-buildah run $container go build .
+#buildah config --workingdir ./account $container
+buildah run --contextdir ./account $container go mod download
+buildah run --contextdir ./account $container go build .
 
 #echo " --- Build list ---"
 #buildah config --workingdir ./list $container
