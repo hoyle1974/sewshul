@@ -29,7 +29,7 @@ RUN chmod u+x /tmp/login
 ############################
 # STEP 2 build a small image
 ############################
-FROM scratch
+FROM ubuntu:18.04
 # Import from builder.
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /etc/passwd /etc/passwd
@@ -42,5 +42,5 @@ COPY --from=builder /tmp/login /go/bin/login
 USER appuser:appuser
 # Expose the port
 EXPOSE 8080
-# Run the account binary.
-ENTRYPOINT /go/bin/$EXE
+# Run the binary.
+ENTRYPOINT /go/bin/"$EXE"
