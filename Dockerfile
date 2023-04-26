@@ -35,11 +35,11 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group
 # Copy our static executable
+USER appuser:appuser
 COPY --from=builder /tmp/account /go/bin/account
 COPY --from=builder /tmp/list /go/bin/list
 COPY --from=builder /tmp/login /go/bin/login
 # Use an unprivileged user.
-USER appuser:appuser
 # Expose the port
 EXPOSE 8080
 # Run the binary.
