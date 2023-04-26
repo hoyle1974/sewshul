@@ -9,10 +9,11 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 var (
-	port = flag.Int("port", 8080, "The server port")
+	port = flag.Int("port", 443, "The server port")
 	ip   = flag.String("ip", "0.0.0.0", "address")
 	env  = flag.String("env", "dev", "environment")
 )
@@ -33,6 +34,7 @@ func Start(name string, register func(*grpc.Server)) {
 
 	s := grpc.NewServer()
 	register(s)
+	reflection.Register(s)
 	log.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatal().AnErr("error", err).Msg("failed to serve")
