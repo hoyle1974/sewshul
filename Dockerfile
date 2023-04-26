@@ -43,4 +43,5 @@ COPY --from=builder /tmp/login /go/bin/login
 # Expose the port
 EXPOSE 8080
 # Run the binary.
-ENTRYPOINT /go/bin/"$EXE"
+#ENTRYPOINT /go/bin/"$EXE"
+ENTRYPOINT "$EXE"
