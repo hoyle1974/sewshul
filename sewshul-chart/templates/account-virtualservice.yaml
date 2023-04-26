@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: account-{{ include "sewshul-chart.fullname" . }}
+  labels:
+    {{- include "sewshul-chart.labels" . | nindent 4 }}
+spec:
+  hosts:
+  - {{ .Values.accountvirtualservice.host }}
+  gateways:
+  - {{ .Values.accountvirtualservice.gateway }}
+  http:
+  - match:
+    - uri:
+        prefix: "/account"
+    - port: {{ .Values.accountvirtualservice.port }}
+    route:
+    - destination:
+        host: {{ .Values.accountvirtualservice.internalHost }}
+        port:
+          number: {{ .Values.accountservice.port }}
+      weight: 100

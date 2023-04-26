@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: login-{{ include "sewshul-chart.fullname" . }}
+  labels:
+    {{- include "sewshul-chart.labels" . | nindent 4 }}
+spec:
+  hosts:
+  - {{ .Values.loginvirtualservice.host }}
+  gateways:
+  - {{ .Values.loginvirtualservice.gateway }}
+  http:
+  - match:
+    - uri:
+        prefix: "/login"
+    - port: {{ .Values.loginvirtualservice.port }}
+    route:
+    - destination:
+        host: {{ .Values.loginvirtualservice.internalHost }}
+        port:
+          number: {{ .Values.loginservice.port }}
+      weight: 100

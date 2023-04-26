@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: list-{{ include "sewshul-chart.fullname" . }}
+  labels:
+    {{- include "sewshul-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.listservice.type }}
+  ports:
+    - port: {{ .Values.listservice.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "sewshul-chart.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: list-{{ include "sewshul-chart.fullname" . }}
+  labels:
+    {{- include "sewshul-chart.labels" . | nindent 4 }}
+spec:
+  hosts:
+  - {{ .Values.listvirtualservice.host }}
+  gateways:
+  - {{ .Values.listvirtualservice.gateway }}
+  http:
+  - match:
+    - uri:
+        prefix: "/list"
+    - port: {{ .Values.listvirtualservice.port }}
+    route:
+    - destination:
+        host: {{ .Values.listvirtualservice.internalHost }}
+        port:
+          number: {{ .Values.listservice.port }}
+      weight: 100
