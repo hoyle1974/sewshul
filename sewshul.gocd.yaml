@@ -129,6 +129,18 @@ pipelines:
             - exec:
                 arguments:
                   - -c
-                  - kubectl set image deployment/sewshul sewshul=jstrohm/sewshul:${GO_PIPELINE_LABEL} -n default
+                  - kubectl set image deployment/list.sewshul sewshul=jstrohm/sewshul:${GO_PIPELINE_LABEL} -n default
+                command: /bin/bash
+                run_if: passed
+            - exec:
+                arguments:
+                  - -c
+                  - kubectl set image deployment/account.sewshul sewshul=jstrohm/sewshul:${GO_PIPELINE_LABEL} -n default
+                command: /bin/bash
+                run_if: passed
+            - exec:
+                arguments:
+                  - -c
+                  - kubectl set image deployment/login.sewshul sewshul=jstrohm/sewshul:${GO_PIPELINE_LABEL} -n default
                 command: /bin/bash
                 run_if: passed
