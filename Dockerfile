@@ -39,6 +39,7 @@ USER appuser:appuser
 COPY --from=builder /tmp/account /go/bin/account
 COPY --from=builder /tmp/list /go/bin/list
 COPY --from=builder /tmp/login /go/bin/login
+RUN chmod ugo+x /go/bin/*
 # Use an unprivileged user.
 # Expose the port
 EXPOSE 8080
