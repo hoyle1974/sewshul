@@ -3,7 +3,7 @@ module github.com/hoyle1974/sewshul/login
 go 1.20
 
 require (
-	github.com/hoyle1974/sewshul/microservice v0.0.0-20230426064954-3024349e8693
+	github.com/hoyle1974/sewshul/microservice v0.0.0-20230426193132-378030939768
 	github.com/hoyle1974/sewshul/proto v0.0.0-20230424185800-f51132a1ca22
 	google.golang.org/grpc v1.54.0
 )

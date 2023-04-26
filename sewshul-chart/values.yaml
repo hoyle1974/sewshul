@@ -39,34 +39,34 @@ securityContext: {}
 listservice:
   name: list-sewshul-service
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  port: 443
+  targetPort: 443
 
 listvirtualservice:
   gateway: default/primary-gateway
-  internalHost: list.sewshul.default.svc.cluster.local
+  internalHost: list-sewshul.default.svc.cluster.local
   host: list.sewshul.decepticons.local
 
 loginservice:
   name: login-sewshul-service
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  port: 443
+  targetPort: 443
 
 loginvirtualservice:
   gateway: default/primary-gateway
-  internalHost: login.sewshul.default.svc.cluster.local
+  internalHost: login-sewshul.default.svc.cluster.local
   host: login.sewshul.decepticons.local
 
 accountservice:
   name: account-sewshul-service
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  port: 443
+  targetPort: 443
 
 accountvirtualservice:
   gateway: default/primary-gateway
-  internalHost: account.sewshul.default.svc.cluster.local
+  internalHost: account-sewshul.default.svc.cluster.local
   host: account.sewshul.decepticons.local
 
 ingress:
