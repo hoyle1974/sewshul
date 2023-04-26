@@ -23,9 +23,9 @@ WORKDIR $GOPATH/src/mypackage/myapp/
 COPY sewshul/account /tmp/account
 COPY sewshul/list /tmp/list
 COPY sewshul/login /tmp/login
-RUN chmod u+x /tmp/account
-RUN chmod u+x /tmp/list
-RUN chmod u+x /tmp/login
+RUN chmod ugo+x /tmp/account
+RUN chmod ugo+x /tmp/list
+RUN chmod ugo+x /tmp/login
 ############################
 # STEP 2 build a small image
 ############################
@@ -39,7 +39,6 @@ USER appuser:appuser
 COPY --from=builder /tmp/account /go/bin/account
 COPY --from=builder /tmp/list /go/bin/list
 COPY --from=builder /tmp/login /go/bin/login
-RUN chmod ugo+x /go/bin/*
 # Use an unprivileged user.
 # Expose the port
 EXPOSE 8080
