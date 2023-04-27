@@ -41,6 +41,6 @@ COPY --from=builder /tmp/list /go/bin/list
 COPY --from=builder /tmp/login /go/bin/login
 # Use an unprivileged user.
 # Expose the port
-EXPOSE "$PORT"
+EXPOSE 8443
 # Run the binary.
 ENTRYPOINT "$EXE" --port "$PORT"
