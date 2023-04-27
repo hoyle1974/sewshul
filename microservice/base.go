@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	port = flag.Int("port", 443, "The server port")
+	port = flag.Int("port", 8443, "The server port")
 	ip   = flag.String("ip", "0.0.0.0", "address")
 	env  = flag.String("env", "dev", "environment")
 )
