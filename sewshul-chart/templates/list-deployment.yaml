@@ -36,13 +36,15 @@ spec:
           env:
             - name: EXE
               value: "/go/bin/list"
+            - name: PORT
+              value: "8443"              
           ports:
             - name: http
               containerPort: {{ .Values.listservice.port }}
               protocol: TCP
           livenessProbe:
             grpc:
-              port: 443
+              port: 8443
             initialDelaySeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

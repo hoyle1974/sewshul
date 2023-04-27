@@ -8,7 +8,7 @@ image:
   repository: jstrohm/sewshul
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "47"
+  tag: "53"
 
 imagePullSecrets: [{ name: regcred }]
 nameOverride: ""
