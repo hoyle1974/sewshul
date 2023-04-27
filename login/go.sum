@@ -5,14 +5,6 @@ github.com/golang/protobuf v1.5.2 h1:ROPKBNFfQgOUMifHyP+KYbvpjbdoFNs+aK7DXlji0Tw
 github.com/golang/protobuf v1.5.2/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
-github.com/hoyle1974/sewshul/microservice v0.0.0-20230424185800-f51132a1ca22 h1:Kw5AK8uJ8QdyKtOT7xvpJhFUlcpoKmeHeIsvVD+Hrr0=
-github.com/hoyle1974/sewshul/microservice v0.0.0-20230424185800-f51132a1ca22/go.mod h1:jsi0KttGYuXEYJTnCEPDU1ABYsyqiRoHZIyfWsYToz8=
-github.com/hoyle1974/sewshul/microservice v0.0.0-20230426064954-3024349e8693 h1:uCU/abSukW6phrcQaf73SYfdg7uAzfvRuzZkIu8W2Bo=
-github.com/hoyle1974/sewshul/microservice v0.0.0-20230426064954-3024349e8693/go.mod h1:jsi0KttGYuXEYJTnCEPDU1ABYsyqiRoHZIyfWsYToz8=
-github.com/hoyle1974/sewshul/microservice v0.0.0-20230426193132-378030939768 h1:U9biIaa+lsZSkuk6/arqYEVseKjGCAnFyh+eMyO4ptk=
-github.com/hoyle1974/sewshul/microservice v0.0.0-20230426193132-378030939768/go.mod h1:jsi0KttGYuXEYJTnCEPDU1ABYsyqiRoHZIyfWsYToz8=
-github.com/hoyle1974/sewshul/microservice v0.0.0-20230426195926-c9d2351577aa h1:T4xkvOVss36qbzZGbK1R0Md2DPAvh7qqds4XCkpOpOM=
-github.com/hoyle1974/sewshul/microservice v0.0.0-20230426195926-c9d2351577aa/go.mod h1:jsi0KttGYuXEYJTnCEPDU1ABYsyqiRoHZIyfWsYToz8=
 github.com/hoyle1974/sewshul/microservice v0.0.0-20230426201326-73c9bec7c813 h1:9SUturqR9RuROQLc2kv+ctkkfNeHNUvTO04iH7f6XXM=
 github.com/hoyle1974/sewshul/microservice v0.0.0-20230426201326-73c9bec7c813/go.mod h1:jsi0KttGYuXEYJTnCEPDU1ABYsyqiRoHZIyfWsYToz8=
 github.com/hoyle1974/sewshul/proto v0.0.0-20230424185800-f51132a1ca22 h1:0jD1z7vA5xBliC0RC0/eAsuAwKE53tsFPs5h1yF4V7w=
