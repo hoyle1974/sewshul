@@ -10,6 +10,6 @@ spec:
     - port: {{ .Values.accountservice.port }}
       targetPort: http
       protocol: TCP
-      name: http
+      name: grpc
   selector:
     {{- include "sewshul-chart.selectorLabels" . | nindent 4 }}

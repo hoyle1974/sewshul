@@ -11,8 +11,6 @@ spec:
   - {{ .Values.accountvirtualservice.gateway }}
   http:
   - match:
-    - uri:
-        prefix: "/account"
     - port: {{ .Values.accountvirtualservice.port }}
     route:
     - destination:

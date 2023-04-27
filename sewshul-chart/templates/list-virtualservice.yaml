@@ -11,8 +11,6 @@ spec:
   - {{ .Values.listvirtualservice.gateway }}
   http:
   - match:
-    - uri:
-        prefix: "/list"
     - port: {{ .Values.listvirtualservice.port }}
     route:
     - destination:

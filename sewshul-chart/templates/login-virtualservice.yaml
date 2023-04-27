@@ -11,8 +11,6 @@ spec:
   - {{ .Values.loginvirtualservice.gateway }}
   http:
   - match:
-    - uri:
-        prefix: "/login"
     - port: {{ .Values.loginvirtualservice.port }}
     route:
     - destination:

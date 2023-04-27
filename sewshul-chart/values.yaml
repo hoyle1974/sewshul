@@ -8,7 +8,7 @@ image:
   repository: jstrohm/sewshul
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "46"
+  tag: "47"
 
 imagePullSecrets: [{ name: regcred }]
 nameOverride: ""
@@ -39,8 +39,8 @@ securityContext: {}
 listservice:
   name: list-sewshul-service
   type: ClusterIP
-  port: 443
-  targetPort: 443
+  port: 8443
+  targetPort: 8443
 
 listvirtualservice:
   gateway: default/primary-gateway
@@ -50,8 +50,8 @@ listvirtualservice:
 loginservice:
   name: login-sewshul-service
   type: ClusterIP
-  port: 443
-  targetPort: 443
+  port: 8443
+  targetPort: 8443
 
 loginvirtualservice:
   gateway: default/primary-gateway
@@ -61,8 +61,8 @@ loginvirtualservice:
 accountservice:
   name: account-sewshul-service
   type: ClusterIP
-  port: 443
-  targetPort: 443
+  port: 8443
+  targetPort: 8443
 
 accountvirtualservice:
   gateway: default/primary-gateway
