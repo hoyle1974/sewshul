@@ -6,6 +6,9 @@ import (
 	"net"
 	"os"
 
+	grpczerolog "github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2"
+	middleware "github.com/grpc-ecosystem/go-grpc-middleware/v2"
+	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -32,7 +35,14 @@ func Start(name string, register func(*grpc.Server)) {
 		log.Fatal().AnErr("error", err).Msg("failed to listen")
 	}
 
-	s := grpc.NewServer()
+	s := grpc.NewServer(
+		middleware.WithUnaryServerChain(
+			logging.UnaryServerInterceptor(grpczerolog.InterceptorLogger(log.Logger)),
+		),
+		middleware.WithStreamServerChain(
+			logging.StreamServerInterceptor(grpczerolog.InterceptorLogger(log.Logger)),
+		),
+	)
 	register(s)
 	reflection.Register(s)
 	log.Printf("server listening at %v", lis.Addr())
