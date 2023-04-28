@@ -13,11 +13,6 @@ type server struct {
 	pb.UnimplementedSocialListServiceServer
 }
 
-// func (s *server) CreateAccount(ctx context.Context, in *pb.CreateAccountRequest) (*pb.CreateAccountResponse, error) {
-// 	log.Printf("Received: %v/%v", in.GetUsername(), in.GetPassword())
-// 	return &pb.CreateAccountResponse{Message: "Hello " + in.GetUsername(), AccountId: "id"}, nil
-// }
-
 func (s *server) GetSocialList(ctx context.Context, in *pb.SocialListRequest) (*pb.SocialListResponse, error) {
 	log.Printf("Received: %v", in.GetUserId())
 	return &pb.SocialListResponse{}, nil
