@@ -24,8 +24,10 @@ func (s *server) CreateAccount(ctx context.Context, in *pb.CreateAccountRequest)
 	return &pb.CreateAccountResponse{Message: "Hello " + in.GetUsername(), AccountId: id.String()}, nil
 }
 
+func register(appCtx services.AppCtx) {
+	pb.RegisterAccountServiceServer(appCtx.Server, &server{appCtx: appCtx})
+}
+
 func main() {
-	microservice.Start("account", func(appCtx services.AppCtx) {
-		pb.RegisterAccountServiceServer(appCtx.S, &server{appCtx: appCtx})
-	})
+	microservice.Start("account", register)
 }

@@ -23,7 +23,7 @@ message GetSocialListResponse {
 
 message AddToSocialListRequest {
   string user_id = 1;
-  SocialListType socail_list_type = 2;
+  SocialListType social_list_type = 2;
   string id_to_add = 3;
 }
 

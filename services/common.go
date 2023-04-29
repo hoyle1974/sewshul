@@ -14,9 +14,9 @@ func HashPassword(password string) (string, error) {
 }
 
 type AppCtx struct {
-	S   *grpc.Server
-	log zerolog.Logger
-	db  *sql.DB
+	Server *grpc.Server
+	log    zerolog.Logger
+	db     *sql.DB
 }
 
 func (a AppCtx) Log(f string) zerolog.Logger {
@@ -25,9 +25,9 @@ func (a AppCtx) Log(f string) zerolog.Logger {
 
 func NewAppCtx(l zerolog.Logger, s *grpc.Server, db *sql.DB) AppCtx {
 	ctx := AppCtx{
-		S:   s,
-		log: l,
-		db:  db,
+		Server: s,
+		log:    l,
+		db:     db,
 	}
 
 	ctx.log.Info().Msg("New Context created")
