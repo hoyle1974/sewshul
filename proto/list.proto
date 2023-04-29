@@ -29,21 +29,18 @@ message AddToSocialListRequest {
 
 message AddToSocialListResponse {
   Error error = 1;
-  bool success = 2;
-  string message = 3;
+  string message = 2;
 }
 
 message RemoveFromSocialListRequest {
-  Error error = 1;
-  string user_id = 2;
-  SocialListType social_list_type = 3;
-  string id_to_remove = 4;
+  string user_id = 1;
+  SocialListType social_list_type = 2;
+  string id_to_remove = 3;
 }
 
 message RemoveFromSocialListResponse {
   Error error = 1;
-  bool success = 2;
-  string message = 3;
+  string message = 2;
 }
 
 service SocialListService {

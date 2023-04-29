@@ -36,10 +36,31 @@ func (s *server) GetSocialList(ctx context.Context, in *pb.GetSocialListRequest)
 }
 
 func (s *server) AddToSocialList(ctx context.Context, in *pb.AddToSocialListRequest) (*pb.AddToSocialListResponse, error) {
+	log.Printf("Received: %v/%v/%v", in.GetUserId(), in.GetSocailListType(), in.GetIdToAdd())
+
+	stmt := `insert into "lists"("id", "list_type","owner_id","entity_id") values(gen_random_uuid(),$1, $2,$3)`
+	row := s.db.QueryRow(stmt, in.GetSocailListType(), in.GetUserId(), in.GetIdToAdd())
+	if row.Err() != nil {
+		return &pb.AddToSocialListResponse{Error: microservice.ErrToProto(row.Err())}, row.Err()
+	}
+
 	return &pb.AddToSocialListResponse{}, nil
 }
 
 func (s *server) RemoveFromSocialList(ctx context.Context, in *pb.RemoveFromSocialListRequest) (*pb.RemoveFromSocialListResponse, error) {
+	log.Printf("Received: %v/%v/%v", in.GetUserId(), in.GetSocialListType(), in.GetIdToRemove())
+
+	stmt := `delete from "lists" where "owner_id" = ? and "list_type" = ? and "entity_id" = ?)`
+	result, err := s.db.Exec(stmt, in.GetUserId(), in.GetSocialListType(), in.GetIdToRemove())
+	if err != nil {
+		return &pb.RemoveFromSocialListResponse{Error: microservice.ErrToProto(err)}, err
+	}
+	rows, err := result.RowsAffected()
+	if err != nil {
+		return &pb.RemoveFromSocialListResponse{Error: microservice.ErrToProto(err)}, err
+	}
+	log.Printf("Removed %d rows\n", rows)
+
 	return &pb.RemoveFromSocialListResponse{}, nil
 }
 
