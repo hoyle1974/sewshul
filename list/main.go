@@ -15,10 +15,24 @@ type server struct {
 	db *sql.DB
 }
 
-func (s *server) GetSocialList(ctx context.Context, in *pb.SocialListRequest) (*pb.SocialListResponse, error) {
+func (s *server) GetSocialList(ctx context.Context, in *pb.GetSocialListRequest) (*pb.GetSocialListResponse, error) {
 	log.Printf("Received: %v", in.GetUserId())
-	return &pb.SocialListResponse{}, nil
 
+	stmt := `select id, entity_id from "lists" where "owner_id" = $1 and "list_type" = $2`
+	rows, err := s.db.Query(stmt, in.GetUserId(), in.GetListType().String())
+	if err != nil {
+		return &pb.GetSocialListResponse{Error: microservice.ErrToProto(err)}, err
+	}
+
+	entities := make([]string, 0)
+	defer rows.Close()
+	for rows.Next() {
+		var id, entity_id string
+		rows.Scan(&id, &entity_id)
+		entities = append(entities, entity_id)
+	}
+
+	return &pb.GetSocialListResponse{Ids: entities}, nil
 }
 
 func (s *server) AddToSocialList(ctx context.Context, in *pb.AddToSocialListRequest) (*pb.AddToSocialListResponse, error) {

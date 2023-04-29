@@ -11,13 +11,14 @@ enum SocialListType {
   BLOCKED = 2;
 }
 
-message SocialListRequest {
+message GetSocialListRequest {
   string user_id = 1;
   SocialListType list_type = 2;
 }
 
-message SocialListResponse {
-  repeated string ids = 1;
+message GetSocialListResponse {
+  Error error = 1;
+  repeated string ids = 2;
 }
 
 message AddToSocialListRequest {
@@ -46,7 +47,7 @@ message RemoveFromSocialListResponse {
 }
 
 service SocialListService {
-  rpc GetSocialList (SocialListRequest) returns (SocialListResponse);
+  rpc GetSocialList (GetSocialListRequest) returns (GetSocialListResponse);
   rpc AddToSocialList (AddToSocialListRequest) returns (AddToSocialListResponse);
   rpc RemoveFromSocialList (RemoveFromSocialListRequest) returns (RemoveFromSocialListResponse);
 }

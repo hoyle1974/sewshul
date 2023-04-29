@@ -28,7 +28,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SocialListServiceClient interface {
-	GetSocialList(ctx context.Context, in *SocialListRequest, opts ...grpc.CallOption) (*SocialListResponse, error)
+	GetSocialList(ctx context.Context, in *GetSocialListRequest, opts ...grpc.CallOption) (*GetSocialListResponse, error)
 	AddToSocialList(ctx context.Context, in *AddToSocialListRequest, opts ...grpc.CallOption) (*AddToSocialListResponse, error)
 	RemoveFromSocialList(ctx context.Context, in *RemoveFromSocialListRequest, opts ...grpc.CallOption) (*RemoveFromSocialListResponse, error)
 }
@@ -41,8 +41,8 @@ func NewSocialListServiceClient(cc grpc.ClientConnInterface) SocialListServiceCl
 	return &socialListServiceClient{cc}
 }
 
-func (c *socialListServiceClient) GetSocialList(ctx context.Context, in *SocialListRequest, opts ...grpc.CallOption) (*SocialListResponse, error) {
-	out := new(SocialListResponse)
+func (c *socialListServiceClient) GetSocialList(ctx context.Context, in *GetSocialListRequest, opts ...grpc.CallOption) (*GetSocialListResponse, error) {
+	out := new(GetSocialListResponse)
 	err := c.cc.Invoke(ctx, SocialListService_GetSocialList_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (c *socialListServiceClient) RemoveFromSocialList(ctx context.Context, in *
 // All implementations must embed UnimplementedSocialListServiceServer
 // for forward compatibility
 type SocialListServiceServer interface {
-	GetSocialList(context.Context, *SocialListRequest) (*SocialListResponse, error)
+	GetSocialList(context.Context, *GetSocialListRequest) (*GetSocialListResponse, error)
 	AddToSocialList(context.Context, *AddToSocialListRequest) (*AddToSocialListResponse, error)
 	RemoveFromSocialList(context.Context, *RemoveFromSocialListRequest) (*RemoveFromSocialListResponse, error)
 	mustEmbedUnimplementedSocialListServiceServer()
@@ -82,7 +82,7 @@ type SocialListServiceServer interface {
 type UnimplementedSocialListServiceServer struct {
 }
 
-func (UnimplementedSocialListServiceServer) GetSocialList(context.Context, *SocialListRequest) (*SocialListResponse, error) {
+func (UnimplementedSocialListServiceServer) GetSocialList(context.Context, *GetSocialListRequest) (*GetSocialListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSocialList not implemented")
 }
 func (UnimplementedSocialListServiceServer) AddToSocialList(context.Context, *AddToSocialListRequest) (*AddToSocialListResponse, error) {
@@ -105,7 +105,7 @@ func RegisterSocialListServiceServer(s grpc.ServiceRegistrar, srv SocialListServ
 }
 
 func _SocialListService_GetSocialList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SocialListRequest)
+	in := new(GetSocialListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func _SocialListService_GetSocialList_Handler(srv interface{}, ctx context.Conte
 		FullMethod: SocialListService_GetSocialList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SocialListServiceServer).GetSocialList(ctx, req.(*SocialListRequest))
+		return srv.(SocialListServiceServer).GetSocialList(ctx, req.(*GetSocialListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
