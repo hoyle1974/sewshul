@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"log"
 
 	"github.com/hoyle1974/sewshul/microservice"
@@ -11,6 +12,7 @@ import (
 
 type server struct {
 	pb.UnimplementedSocialListServiceServer
+	db *sql.DB
 }
 
 func (s *server) GetSocialList(ctx context.Context, in *pb.SocialListRequest) (*pb.SocialListResponse, error) {
@@ -28,7 +30,7 @@ func (s *server) RemoveFromSocialList(ctx context.Context, in *pb.RemoveFromSoci
 }
 
 func main() {
-	microservice.Start("sociallist", func(s *grpc.Server) {
-		pb.RegisterSocialListServiceServer(s, &server{})
+	microservice.Start("sociallist", func(s *grpc.Server, db *sql.DB) {
+		pb.RegisterSocialListServiceServer(s, &server{db: db})
 	})
 }

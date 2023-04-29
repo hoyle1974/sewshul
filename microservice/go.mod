@@ -12,6 +12,7 @@ require github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.2.0.2020100209
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2 v2.0.0-rc.3
+	github.com/lib/pq v1.10.9
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	golang.org/x/net v0.8.0 // indirect
