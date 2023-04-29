@@ -1,7 +1,6 @@
 package microservice
 
 import (
-	"database/sql"
 	"flag"
 	"fmt"
 	"net"
@@ -11,23 +10,18 @@ import (
 	middleware "github.com/grpc-ecosystem/go-grpc-middleware/v2"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	pb "github.com/hoyle1974/sewshul/proto"
+	"github.com/hoyle1974/sewshul/services"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
-
-func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
-}
 
 func ErrToProto(err error) *pb.Error {
 	return &pb.Error{Msg: err.Error()}
 }
 
-func Start(name string, register func(*grpc.Server, *sql.DB)) {
+func Start(name string, register func(appCtx services.AppCtx)) {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	if *env == "dev" {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
@@ -55,7 +49,14 @@ func Start(name string, register func(*grpc.Server, *sql.DB)) {
 			logging.StreamServerInterceptor(grpczerolog.InterceptorLogger(log.Logger)),
 		),
 	)
-	register(s, db)
+
+	appCtx := services.AppCtx{
+		s:   s,
+		log: log,
+		db:  db,
+	}
+
+	register(appCtx)
 	reflection.Register(s)
 	log.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
