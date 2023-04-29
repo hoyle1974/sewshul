@@ -14,15 +14,23 @@ func HashPassword(password string) (string, error) {
 }
 
 type AppCtx struct {
-	s   *grpc.Server
+	S   *grpc.Server
 	log zerolog.Logger
 	db  *sql.DB
 }
 
-func NewAppCtx(s *grpc.Server, log zerolog.Logger, db *sql.DB) AppCtx {
-	return AppCtx{
-		s:   s,
-		log: log,
+func (a AppCtx) Log(f string) zerolog.Logger {
+	return a.log.With().Str("func", f).Logger()
+}
+
+func NewAppCtx(l zerolog.Logger, s *grpc.Server, db *sql.DB) AppCtx {
+	ctx := AppCtx{
+		S:   s,
+		log: l,
 		db:  db,
 	}
+
+	ctx.log.Info().Msg("New Context created")
+
+	return ctx
 }

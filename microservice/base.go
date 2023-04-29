@@ -26,14 +26,17 @@ func Start(name string, register func(appCtx services.AppCtx)) {
 	if *env == "dev" {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	}
-	log.Info().Msg("Connecting to database")
+
+	l := log.With().Str("service", name).Logger()
+
+	l.Info().Msg("Connecting to database")
 	db, err := DB()
 	if err != nil {
-		log.Fatal().AnErr("Error connecting to database", err).Msg("error")
+		l.Fatal().AnErr("Error connecting to database", err).Msg("error")
 		return
 	}
 
-	log.Info().Msg("Starting " + name + " microservice")
+	l.Info().Msg("Starting " + name + " microservice")
 
 	flag.Parse()
 	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", *ip, *port))
@@ -43,22 +46,18 @@ func Start(name string, register func(appCtx services.AppCtx)) {
 
 	s := grpc.NewServer(
 		middleware.WithUnaryServerChain(
-			logging.UnaryServerInterceptor(grpczerolog.InterceptorLogger(log.Logger)),
+			logging.UnaryServerInterceptor(grpczerolog.InterceptorLogger(l)),
 		),
 		middleware.WithStreamServerChain(
-			logging.StreamServerInterceptor(grpczerolog.InterceptorLogger(log.Logger)),
+			logging.StreamServerInterceptor(grpczerolog.InterceptorLogger(l)),
 		),
 	)
 
-	appCtx := services.AppCtx{
-		s:   s,
-		log: log,
-		db:  db,
-	}
+	appCtx := services.NewAppCtx(l, s, db)
 
 	register(appCtx)
 	reflection.Register(s)
-	log.Printf("server listening at %v", lis.Addr())
+	l.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatal().AnErr("error", err).Msg("failed to serve")
 	}

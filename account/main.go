@@ -16,7 +16,7 @@ type server struct {
 
 func (s *server) CreateAccount(ctx context.Context, in *pb.CreateAccountRequest) (*pb.CreateAccountResponse, error) {
 
-	id, err := services.CreateAccount(s.app, in.GetUsername(), in.GetPassword())
+	id, err := services.CreateAccount(s.appCtx, in.GetUsername(), in.GetPassword())
 	if err != nil {
 		return &pb.CreateAccountResponse{Error: microservice.ErrToProto(err)}, err
 	}
@@ -26,6 +26,6 @@ func (s *server) CreateAccount(ctx context.Context, in *pb.CreateAccountRequest)
 
 func main() {
 	microservice.Start("account", func(appCtx services.AppCtx) {
-		pb.RegisterAccountServiceServer(s, &server{appCtx: appCtx})
+		pb.RegisterAccountServiceServer(appCtx.S, &server{appCtx: appCtx})
 	})
 }
