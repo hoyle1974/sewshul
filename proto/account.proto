@@ -1,7 +1,9 @@
 syntax = "proto3";
+import "proto/common.proto";
 
 package proto;
 option go_package = "github.com/hoyle1974/sewshul/proto";
+
 
 message CreateAccountRequest {
   string username = 1;
@@ -13,6 +15,7 @@ service AccountService {
 }
 
 message CreateAccountResponse {
-  string message = 1;
-  string account_id = 2;
+  Error error = 1;
+  string message = 2;
+  string account_id = 3;
 }

@@ -1,7 +1,9 @@
 syntax = "proto3";
+import "proto/common.proto";
 
 package proto;
 option go_package = "github.com/hoyle1974/sewshul/proto";
+
 
 enum SocialListType {
   FOLLOW = 0;
@@ -25,19 +27,22 @@ message AddToSocialListRequest {
 }
 
 message AddToSocialListResponse {
-  bool success = 1;
-  string message = 2;
+  Error error = 1;
+  bool success = 2;
+  string message = 3;
 }
 
 message RemoveFromSocialListRequest {
-  string user_id = 1;
-  SocialListType social_list_type = 2;
-  string id_to_remove = 3;
+  Error error = 1;
+  string user_id = 2;
+  SocialListType social_list_type = 3;
+  string id_to_remove = 4;
 }
 
 message RemoveFromSocialListResponse {
-  bool success = 1;
-  string message = 2;
+  Error error = 1;
+  bool success = 2;
+  string message = 3;
 }
 
 service SocialListService {
