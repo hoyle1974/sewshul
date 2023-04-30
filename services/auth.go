@@ -1,10 +1,12 @@
 package services
 
 import (
+	"net"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
-func Login(appCtx AppCtx, username string, password string) (AccountId, error) {
+func Login(appCtx AppCtx, username string, password string, ip net.IP, port int32) (AccountId, error) {
 	log := appCtx.Log("Login")
 	log.Printf("Received: %v/%v", username, password)
 
@@ -23,5 +25,12 @@ func Login(appCtx AppCtx, username string, password string) (AccountId, error) {
 		return NilAccountId(), err
 	}
 
-	return NewAccountId(id), nil
+	accountId := NewAccountId(id)
+
+	err = UpdateUserContact(appCtx, accountId, ip, port)
+	if err != nil {
+		return NilAccountId(), err
+	}
+
+	return accountId, nil
 }

@@ -13,11 +13,23 @@ type server struct {
 	appCtx services.AppCtx
 }
 
+func PBSocialListTypeToSocialListType(s pb.SocialListType) services.SocialListType {
+	var slt services.SocialListType
+
+	switch s {
+	case pb.SocialListType_BLOCKED:
+		slt = services.SocialListType_BLOCKED
+	case pb.SocialListType_FOLLOW:
+		slt = services.SocialListType_FOLLOWS
+	}
+	return slt
+}
+
 func (s *server) GetSocialList(ctx context.Context, in *pb.GetSocialListRequest) (*pb.GetSocialListResponse, error) {
 	items, err := services.GetSocialList(
 		s.appCtx,
 		services.NewAccountId(in.GetUserId()),
-		in.GetListType().String(),
+		PBSocialListTypeToSocialListType(in.GetListType()),
 	)
 	if err != nil {
 		return &pb.GetSocialListResponse{Error: microservice.ErrToProto(err)}, err
@@ -32,10 +44,11 @@ func (s *server) GetSocialList(ctx context.Context, in *pb.GetSocialListRequest)
 }
 
 func (s *server) AddToSocialList(ctx context.Context, in *pb.AddToSocialListRequest) (*pb.AddToSocialListResponse, error) {
+
 	err := services.AddToSocialList(
 		s.appCtx,
 		services.NewAccountId(in.UserId),
-		in.GetSocialListType().String(),
+		PBSocialListTypeToSocialListType(in.SocialListType),
 		services.NewAccountId(in.IdToAdd),
 	)
 	if err != nil {

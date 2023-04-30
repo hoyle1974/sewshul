@@ -1,10 +1,24 @@
 package services
 
-func GetSocialList(appCtx AppCtx, owner AccountId, listType string) ([]AccountId, error) {
+import "fmt"
+
+type SocialListType string
+
+const (
+	SocialListType_BLOCKED   SocialListType = "BLOCKED"
+	SocialListType_FOLLOWS   SocialListType = "FOLLOWS"
+	SocialListType_FOLLOWING SocialListType = "FOLLOWING"
+)
+
+func GetSocialList(appCtx AppCtx, owner AccountId, listType SocialListType) ([]AccountId, error) {
 	log := appCtx.Log("GetSocialList")
 	log.Printf("Received: %v", owner)
 
 	stmt := `select id, entity_id from "lists" where "owner_id" = $1 and "list_type" = $2`
+	if listType == SocialListType_FOLLOWING {
+		stmt = `select id, entity_id from "lists" where "entity_type" = $1 and "list_type" = $2`
+		listType = SocialListType_FOLLOWS
+	}
 	rows, err := appCtx.db.Query(stmt, owner.String(), listType)
 	if err != nil {
 		return []AccountId{}, err
@@ -21,9 +35,12 @@ func GetSocialList(appCtx AppCtx, owner AccountId, listType string) ([]AccountId
 	return entities, nil
 }
 
-func AddToSocialList(appCtx AppCtx, owner AccountId, listType string, idToAdd AccountId) error {
+func AddToSocialList(appCtx AppCtx, owner AccountId, listType SocialListType, idToAdd AccountId) error {
 	log := appCtx.Log("AddToSocialList")
 	log.Printf("Received: %v/%v/%v", owner, listType, idToAdd)
+	if listType == SocialListType_FOLLOWING {
+		return fmt.Errorf("SocialListType_FOLLOWING is a virtual type and can not be inserted")
+	}
 
 	stmt := `insert into "lists"("id", "list_type","owner_id","entity_id") values(gen_random_uuid(),$1, $2,$3)`
 	row := appCtx.db.QueryRow(stmt, listType, owner.String(), idToAdd.String())

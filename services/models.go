@@ -13,3 +13,12 @@ func (a AccountId) String() string {
 func NewAccountId(id string) AccountId {
 	return AccountId(id)
 }
+
+func AccountIdsToStrings(accountIds []AccountId) []string {
+	out := make([]string, len(accountIds))
+	for _, accountId := range accountIds {
+		out = append(out, accountId.String())
+	}
+
+	return out
+}
