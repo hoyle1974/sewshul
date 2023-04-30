@@ -27,4 +27,13 @@ wasm: main.go
 run: main.go
 	go run .
 
-
+prepare:
+	cd account && go get github.com/hoyle1974/sewshul/microservice@latest && cd ..
+	cd account && go get github.com/hoyle1974/sewshul/services@latest && cd ..
+	cd account && go get github.com/hoyle1974/sewshul/proto@latest && cd ..
+	cd list && go get github.com/hoyle1974/sewshul/microservice@latest && cd ..
+	cd list && go get github.com/hoyle1974/sewshul/services@latest && cd ..
+	cd list && go get github.com/hoyle1974/sewshul/proto@latest && cd ..
+	cd login && go get github.com/hoyle1974/sewshul/microservice@latest && cd ..
+	cd login && go get github.com/hoyle1974/sewshul/services@latest && cd ..
+	cd login && go get github.com/hoyle1974/sewshul/proto@latest && cd ..

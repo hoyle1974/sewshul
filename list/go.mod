@@ -3,15 +3,16 @@ module github.com/hoyle1974/sewshul/list
 go 1.20
 
 require (
-	github.com/hoyle1974/sewshul/microservice v0.0.0-20230428043012-aa4569f69919
-	github.com/hoyle1974/sewshul/proto v0.0.0-20230424185800-f51132a1ca22
-	github.com/hoyle1974/sewshul/services v0.0.0-20230429174120-2e4f166eb9b9
+	github.com/hoyle1974/sewshul/microservice v0.0.0-20230429210913-5385e2d553d1
+	github.com/hoyle1974/sewshul/proto v0.0.0-20230429210913-5385e2d553d1
+	github.com/hoyle1974/sewshul/services v0.0.0-20230429210913-5385e2d553d1
 )
 
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2 v2.0.0-rc.3 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.2.0.20201002093600-73cf2ae9d891 // indirect
+	github.com/lib/pq v1.10.9 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/rs/zerolog v1.29.1 // indirect

@@ -6,17 +6,6 @@ import (
 	"time"
 )
 
-/*
-message ClientAddress {
-  string ip_address = 1;
-  int32 port = 2;
-}
-message UserContact {
-  string user_id = 1;
-  ClientAddress client_address = 2;
-}
-*/
-
 type UserContact struct {
 	AccountID AccountId
 	Ip        net.IP
