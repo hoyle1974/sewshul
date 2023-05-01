@@ -2,7 +2,7 @@ package services
 
 func CreateAccount(app AppCtx, username string, password string) (AccountId, error) {
 	log := app.Log("CreateAccount")
-	log.Printf("Received: %v/%v", username, password)
+	log.Printf("Received: %v/****", username)
 
 	hash, err := HashPassword(password)
 	if err != nil {

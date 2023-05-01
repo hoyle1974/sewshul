@@ -1,3 +1,7 @@
+DROP TABLE user_contacts;
+DROP TABLE lists;
+DROP TABLE users;
+
 CREATE TABLE users (
     id uuid PRIMARY KEY,
     username varchar(255) UNIQUE NOT NULL,
