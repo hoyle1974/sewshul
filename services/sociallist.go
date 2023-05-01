@@ -14,9 +14,9 @@ func GetSocialList(appCtx AppCtx, owner AccountId, listType SocialListType) ([]A
 	log := appCtx.Log("GetSocialList")
 	log.Printf("Received: %v", owner)
 
-	stmt := `select id, entity_id from "lists" where "owner_id" = $1 and "list_type" = $2`
+	stmt := `select entity_id from "lists" where "owner_id" = $1 and "list_type" = $2`
 	if listType == SocialListType_FOLLOWING {
-		stmt = `select id, entity_id from "lists" where "entity_type" = $1 and "list_type" = $2`
+		stmt = `select owner_id from "lists" where "entity_id" = $1 and "list_type" = $2`
 		listType = SocialListType_FOLLOWS
 	}
 	rows, err := appCtx.db.Query(stmt, owner.String(), listType)
@@ -27,8 +27,8 @@ func GetSocialList(appCtx AppCtx, owner AccountId, listType SocialListType) ([]A
 	entities := make([]AccountId, 0)
 	defer rows.Close()
 	for rows.Next() {
-		var id, entity_id string
-		rows.Scan(&id, &entity_id)
+		var entity_id string
+		rows.Scan(&entity_id)
 		entities = append(entities, NewAccountId(entity_id))
 	}
 
