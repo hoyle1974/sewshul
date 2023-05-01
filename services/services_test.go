@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"net"
 	"testing"
 
@@ -57,6 +58,12 @@ func TestSocialList(t *testing.T) {
 				t.Error(err)
 			}
 		}
+
+		accountId, err := Login(appCtx, usernames[i], passwords[i], net.ParseIP(fmt.Sprintf("192.168.181.%v", i)), int32(1000+i))
+		if err != nil {
+			t.Error(err)
+		}
+		assert.Equal(t, accountId, accountIds[i])
 	}
 
 	blocked, err := GetSocialList(appCtx, accountIds[0], SocialListType_BLOCKED)
@@ -94,5 +101,25 @@ func TestSocialList(t *testing.T) {
 		t.Error(err)
 	}
 	assert.Contains(t, following, accountIds[2])
+
+	ucs, err := GetUserContacts(appCtx, accountIds)
+	if err != nil {
+		t.Error(err)
+	}
+	assert.Equal(t, len(ucs), len(accountIds))
+	for _, uc := range ucs {
+		found := false
+		for idx, id := range accountIds {
+			if AccountId(id.String()) == AccountId(uc.AccountID.String()) {
+				found = true
+				ip := net.ParseIP(fmt.Sprintf("192.168.181.%v", idx))
+				assert.Equal(t, ip.String(), uc.Ip.String())
+				assert.Equal(t, int32(1000+idx), uc.Port)
+			}
+		}
+		if !found {
+			t.Error(fmt.Errorf("Account was not found: %v", uc.AccountID))
+		}
+	}
 
 }

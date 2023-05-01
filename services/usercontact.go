@@ -2,8 +2,9 @@ package services
 
 import (
 	"net"
-	"strings"
 	"time"
+
+	"github.com/lib/pq"
 )
 
 type UserContact struct {
@@ -17,8 +18,8 @@ func UpdateUserContact(appCtx AppCtx, accountId AccountId, ip net.IP, port int32
 	log := appCtx.Log("UpdateUserContact")
 	log.Printf("Received: %v/%v/%v", accountId, ip, port)
 
-	stmt := `insert into user_contacts (id,ip,port,timestamp) VALUES ($1,$2,$3,now()) ON CONFLICT(id) DO UPDATE SET ip=$2, port=$3, timestamp=now() `
-	result, err := appCtx.db.Exec(stmt, accountId.String(), ip.String(), port)
+	stmt := `insert into user_contacts (id,ip,port,timestamp) VALUES ($1,$2::INET,$3,now()) ON CONFLICT(id) DO UPDATE SET ip=$2::INET, port=$3, timestamp=now() `
+	result, err := appCtx.db.Exec(stmt, accountId, ip.String(), port)
 	if err != nil {
 		return err
 	}
@@ -35,15 +36,15 @@ func GetUserContacts(appCtx AppCtx, accountIDs []AccountId) ([]UserContact, erro
 	log := appCtx.Log("GetUserContacts")
 	log.Printf("Received: %v", accountIDs)
 
-	stmt := `select id, ip, port, timestamp from "user_contacts" where id in ANY($1::uuid[])`
+	//::uuid[]
+	stmt := `select id, ip, port, timestamp from "user_contacts" where id = any($1::uuid[])`
 
 	params := make([]string, len(accountIDs))
-	for _, accountId := range accountIDs {
-		params = append(params, accountId.String())
+	for idx, accountId := range accountIDs {
+		params[idx] = accountId.String()
 	}
-	param := "{" + strings.Join(params, ",") + "}"
 
-	rows, err := appCtx.db.Query(stmt, param)
+	rows, err := appCtx.db.Query(stmt, pq.Array(params))
 	if err != nil {
 		return []UserContact{}, err
 	}
@@ -52,14 +53,14 @@ func GetUserContacts(appCtx AppCtx, accountIDs []AccountId) ([]UserContact, erro
 	defer rows.Close()
 	for rows.Next() {
 		var id string
-		var ip net.IP
+		var ip string
 		var port int32
 		var timestamp time.Time
 
 		rows.Scan(&id, &ip, &port, &timestamp)
 		contacts = append(contacts, UserContact{
 			AccountID: NewAccountId(id),
-			Ip:        ip,
+			Ip:        net.ParseIP(ip),
 			Port:      port,
 			Time:      timestamp,
 		})
