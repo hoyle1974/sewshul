@@ -22,3 +22,12 @@ func AccountIdsToStrings(accountIds []AccountId) []string {
 
 	return out
 }
+
+func StringsToAccountIds(accountIds []string) []AccountId {
+	out := make([]AccountId, len(accountIds))
+	for _, accountId := range accountIds {
+		out = append(out, NewAccountId(accountId))
+	}
+
+	return out
+}

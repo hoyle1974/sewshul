@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package proto;
+option go_package = "github.com/hoyle1974/sewshul/proto";
+
+
+message MumbleMurmer {
+    string id = 1;
+    string owner_id = 2;
+    google.protobuf.Timestamp timestamp = 3;
+    repeated string distroList = 4;
+    bytes data = 5;
+    bytes signature = 6;
+}
+
+message MurmerRequest {
+    MumbleMurmer data = 1;
+}
+
+message MurmerResponse {
+}
+
+service MumbleService {
+    rpc Murmer (MurmerRequest) returns (MurmerResponse);
+  }
